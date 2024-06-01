@@ -1,0 +1,35 @@
+.header{
+  height: 80px;
+  background-color: #fff;
+  border-bottom: 1px solid rgb(222 226 230);
+}
+
+.header__bottom{
+  margin-left: 70px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.header_image{
+  height: 40px; 
+  margin-left: 70px
+}
+
+.header__a{
+  font-size: 14px; 
+  color: black; 
+  margin-left: 80px;
+  text-decoration: none;
+}
+
+.header__underline{
+  height: 2px;
+  width: 100px;
+  background-color: rgb(129 140 248);
+  margin-top: 67px;
+  margin-left: -75px;
+}
+
+.stepper{
+  margin: 10%;
+}
