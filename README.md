@@ -1,6 +1,6 @@
-# Projeto Laravel com React
+# Projeto Laravel com React (não tive tempo de fazer no symfony)
 
-Este é um projeto Laravel integrado com React. Siga as instruções abaixo para configurar e iniciar o projeto em sua máquina local.
+Este é um projeto Laravel integrado com React. Siga as instruções abaixo para configurar e iniciar o projeto em sua máquina local. Não fiz no symfony devido ao curto tempo que tive devido ao meu atual trabalho.
 
 ## Requisitos
 
