@@ -60,10 +60,7 @@ export default function HorizontalLinearStepper() {
           setIsValidCEP(false);
         });
     } else {
-      setEndereco('');
-      setRua('');
-      setCidade('');
-      setEstado('');
+     
 
       if (CEP.length > 0 && CEP.length < 9) {
         setIsValidCEP(false);
@@ -74,6 +71,8 @@ export default function HorizontalLinearStepper() {
     console.log('CEP.length', CEP.length);
 
   }, [CEP]);
+
+console.log(rua,estado,cidade);
   
   React.useEffect(()=>{
 	  if (name.split(' ').length > 1 || name.length <= 1) {
@@ -124,50 +123,57 @@ export default function HorizontalLinearStepper() {
         }
     }, []);
 
-    const handleNext = async () => {
-        let newSkipped = skipped;
-        if (isStepSkipped(activeStep)) {
-            newSkipped = new Set(newSkipped.values());
-            newSkipped.delete(activeStep);
+const handleNext = async () => {
+    let newSkipped = skipped;
+    if (isStepSkipped(activeStep)) {
+        newSkipped = new Set(newSkipped.values());
+        newSkipped.delete(activeStep);
+    }
+
+    if (activeStep === 0) {
+        const rawBirthday = birthday.replace(/\D/g, '');
+        setBirthday(rawBirthday);
+    }
+
+    if (activeStep === 1) {
+        const rawCep = CEP.replace(/\D/g, '');
+        setCEP(rawCep);
+    }
+
+    if (activeStep === 2) {
+        const rawTelefone = telefone.replace(/\D/g, '');
+        const rawCelular = celular.replace(/\D/g, '');
+
+        const payload = {
+            name,
+            birthday: birthday.replace(/\D/g, ''),
+            cep: CEP.replace(/\D/g, ''),
+            rua,
+            numero,
+            cidade,
+            estado,
+            telefone: rawTelefone,
+            celular: rawCelular
+        };
+
+        console.log('payload', payload);
+
+        try {
+            const response = await axios.post('/userdata', payload);
+            console.log('Deu certo!');
+            setUserId(response.data.id);
+            localStorage.setItem('userId', response.data.id);
+        } catch (error) {
+            console.error('Error saving user data:', error);
         }
+    }
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSkipped(newSkipped);
+}
 
-        if (activeStep === 0) {
-            const rawBirthday = birthday.replace(/\D/g, '');
-            setBirthday(rawBirthday);
-        }
 
-        if (activeStep === 1) {
-            const rawCep = CEP.replace(/\D/g, '');
-            setCEP(rawCep);
-        }
 
-        if (activeStep === 2) {
-            const rawTelefone = telefone.replace(/\D/g, '');
-            const rawCelular = celular.replace(/\D/g, '');
 
-            const payload = {
-                name,
-                birthday: birthday.replace(/\D/g, ''),
-                cep: CEP.replace(/\D/g, ''),
-                rua,
-                numero,
-                cidade,
-                estado,
-                telefone: rawTelefone,
-                celular: rawCelular
-            };
-
-            
-                const response = await axios.post('/userdata', payload)
-                    .catch(error => console.error('Error saving user data:', error));
-                setUserId(response.data.id);
-                localStorage.setItem('userId', response.data.id);
-            
-        }
-
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setSkipped(newSkipped);
-    };
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);

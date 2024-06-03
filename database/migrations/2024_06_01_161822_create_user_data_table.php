@@ -19,7 +19,7 @@ class CreateUserDataTable extends Migration
             $table->string('birthday');
             $table->string('cep', 8);
             $table->string('rua');
-            $table->integer('numero');
+            $table->string('numero');
             $table->string('cidade');
             $table->string('estado');
             $table->string('telefone', 20);
