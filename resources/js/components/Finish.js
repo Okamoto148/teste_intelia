@@ -17,9 +17,11 @@ import AddRoadIcon from '@mui/icons-material/AddRoad';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
 
+// Componente funcional que renderiza uma lista aninhada de dados do usuário
 export default function NestedList({name, birthday, rua, numero, cidade, estado, celular}) {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(true); // Estado para controlar a abertura e fechamento da lista aninhada
 
+  // Função para alternar a visibilidade da lista aninhada
   const handleClick = () => {
     setOpen(!open);
   };
@@ -35,37 +37,47 @@ export default function NestedList({name, birthday, rua, numero, cidade, estado,
         </ListSubheader>
       }
     >
+      {/* Item da lista para exibir o nome do usuário */}
       <ListItemButton>
         <ListItemIcon>
           <PersonIcon />
         </ListItemIcon>
         <ListItemText primary={`Nome: ${name}`} />
       </ListItemButton>
+      {/* Item da lista para exibir a data de nascimento do usuário */}
       <ListItemButton>
         <ListItemIcon>
           <CalendarTodayIcon />
         </ListItemIcon>
         <ListItemText primary={`Data de nascimento: ${birthday}`} />
       </ListItemButton>
+      {/* Item da lista para exibir o endereço do usuário */}
       <ListItemButton onClick={handleClick}>
         <ListItemIcon>
           <AddRoadIcon />
         </ListItemIcon>
         <ListItemText primary={`Endereço: ${rua}, ${numero}`} />
+        {/* Ícone para indicar se a lista está aberta ou fechada */}
+        {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
-	  <ListItemButton>
-        <ListItemIcon>
-          <LocationCityIcon />
-        </ListItemIcon>
-        <ListItemText primary={`Cidade: ${cidade} - ${estado}`} />
-      </ListItemButton>
-	  <ListItemButton>
+      {/* Lista aninhada para exibir detalhes do endereço */}
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItemButton sx={{ pl: 4 }}>
+            <ListItemIcon>
+              <LocationCityIcon />
+            </ListItemIcon>
+            <ListItemText primary={`Cidade: ${cidade} - ${estado}`} />
+          </ListItemButton>
+        </List>
+      </Collapse>
+      {/* Item da lista para exibir o celular do usuário */}
+      <ListItemButton>
         <ListItemIcon>
           <SmartphoneIcon />
         </ListItemIcon>
         <ListItemText primary={`Celular: ${celular}`} />
       </ListItemButton>
-      
     </List>
   );
 }
